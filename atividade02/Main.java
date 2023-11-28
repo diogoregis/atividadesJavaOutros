@@ -84,6 +84,7 @@ public class Main {
         System.out.println("Escolha uma opção: ");
         System.out.println("( 1 ) - Gerenciar Alunos");
         System.out.println("( 2 ) - Gerenciar Professor");
+        System.out.println("( 3 ) - Gerenciar Disciplina");
         System.out.println("( 0 ) - Sair");
         acoesMenuPrincipal();
     }
@@ -136,30 +137,39 @@ public class Main {
         switch (opcao){
             case 0:
                 menuPrincipal();
+                break;
             case 1:
                 cadastrandoNovoAluno();
                 menuAluno();
+                break;
             case 2:
                 cadastrarNotaAluno();
                 menuAluno();
+                break;
             case 3:
                 calcularMediaPorAluno();
                 menuAluno();
+                break;
             case 4:
                 calcularMediaPorDisciplina();
                 menuAluno();
+                break;
             case 5:
                 registrarFaltaAluno();
                 menuAluno();
+                break;
             case 7:
                 listarAlunos();
                 menuAluno();
+                break;
             case 6:
                 consultarFaltasAluno();
                 menuAluno();
+                break;
             default:
                 System.out.println("Digite uma opção valida");
                 menuAluno();
+                break;
         }
 
     }
@@ -172,27 +182,35 @@ public class Main {
         switch (op){
             case 0:
                 menuPrincipal();
+                break;
             case 1:
                 cadastrarNovoProfessor();
                 menuProfessor();
+                break;
             case 2:
                 alterarSituacaoProfessor();
                 menuProfessor();
+                break;
             case 3:
                 listarProfessores();
                 menuProfessor();
+                break;
             case 4:
                 cadastrarDisciplinaAoProfessor();
                 menuProfessor();
+                break;
             case 5:
                 listarDisciplinasPorProfessor();
                 menuProfessor();
+                break;
             case 6:
                 listarProfessoresPorDisciplina();
                 menuProfessor();
+                break;
             default:
                 System.out.println("Digite uma opção valida");
                 menuProfessor();
+                break;
         }
 
     }
@@ -285,8 +303,6 @@ public class Main {
         System.out.println();
         System.out.println(listaAlunos.get(op).getNome() + " tem, "
                 + listaAlunos.get(op).getFaltas() + " falta(s).");
-
-
     }
 
     private static void registrarFaltaAluno() {
@@ -325,9 +341,7 @@ public class Main {
     }
 
     private static void calcularMediaPorAluno() {
-
         int op;
-
         listarAlunos();
         System.out.print("Informa o COD do aluno: ");
         op = Integer.parseInt(input.nextLine());
@@ -337,7 +351,8 @@ public class Main {
 
     private static void informarMediaPorAluno(int op) {
 
-        System.out.println("A media de " + listaAlunos.get(op).getNome() + " é: " + listaAlunos.get(op).calculaMedia());
+        System.out.println("A media de " + listaAlunos.get(op).getNome() + " é: "
+                + listaAlunos.get(op).calculaMedia());
 
     }
 
@@ -407,7 +422,11 @@ public class Main {
     }
 
     private static void cadastraDisciplina() {
-        
+        String disciplina;
+        System.out.println();
+        System.out.print("Informe o nome da Disciplina: ");
+        disciplina = input.nextLine();
+        disciplinas.add(disciplina);
     }
 
 }
