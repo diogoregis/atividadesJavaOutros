@@ -7,6 +7,11 @@ public class Aluno extends Pessoa{
     private int faltas=0;
 
 
+    public Aluno(String nome, String disciplina) {
+        setNome(nome);
+        this.disciplina = disciplina;
+    }
+
     public int calculaMedia(){
         //TODO
         return 0;
@@ -43,5 +48,11 @@ public class Aluno extends Pessoa{
 
     public void setFaltas(int faltas) {
         this.faltas = faltas;
+    }
+
+    @Override
+    public String toString() {
+        return "[ " + getNome() + " | " +
+                 disciplina + " | " +  faltas + " faltas ]";
     }
 }

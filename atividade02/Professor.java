@@ -6,8 +6,14 @@ public class Professor extends Pessoa{
 
     private String matricula;
     private List<String> disciplinas;
-    private boolean situacao;
+    private boolean situacao = true;
 
+
+    public Professor(String nome, String matricula, String cpf) {
+        setNome(nome);
+        setCpf(cpf);
+        this.matricula = matricula;
+    }
 
     public void alterarSituacao(){
         if(isSituacao()){
@@ -58,5 +64,12 @@ public class Professor extends Pessoa{
 
     public void setSituacao(boolean situacao) {
         this.situacao = situacao;
+    }
+
+    @Override
+    public String toString() {
+        return "[ " + getNome() + "  "+ getCpf() +" | " + matricula + " | "
+                + disciplinas + " | " + (situacao ? "ATIVO" : "INATIVO") +
+                " ] ";
     }
 }
