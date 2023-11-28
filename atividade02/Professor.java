@@ -1,5 +1,6 @@
 package atividade02;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Professor extends Pessoa{
@@ -12,6 +13,7 @@ public class Professor extends Pessoa{
     public Professor(String nome, String matricula, String cpf) {
         setNome(nome);
         setCpf(cpf);
+        this.disciplinas = new ArrayList<String>();
         this.matricula = matricula;
     }
 

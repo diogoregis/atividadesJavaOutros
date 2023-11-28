@@ -71,8 +71,11 @@ public class Main {
     }
 
     public static void listarProfessores(){
+        int cod = 0;
         for(Professor professor: listaProfessores){
-            System.out.println(professor);
+            System.out.print("COD ( " + cod + " ) " + professor);
+            System.out.println();
+            cod++;
         }
     }
 
@@ -91,6 +94,8 @@ public class Main {
             menuAluno();
         } else if (opcao == 2) {
             menuProfessor();
+        } else if (opcao == 3){
+            menuDisciplina();
         } else if (opcao == 0) {
             System.exit(0);
         } else menuPrincipal();
@@ -122,6 +127,7 @@ public class Main {
         System.out.println("( 5 ) - Listar as disciplinas de um professor");
         System.out.println("( 6 ) - Buscar os professores que lecionam uma disciplina");
         System.out.println("( 0 ) - Voltar");
+        acoesMenuProfessor();
     }
 
     public static void acoesMenuAluno(){
@@ -155,6 +161,119 @@ public class Main {
                 System.out.println("Digite uma opção valida");
                 menuAluno();
         }
+
+    }
+
+    public static void acoesMenuProfessor(){
+        int op = -1;
+        System.out.print("Informe uma opção: ");
+        op = Integer.parseInt(input.nextLine());
+
+        switch (op){
+            case 0:
+                menuPrincipal();
+            case 1:
+                cadastrarNovoProfessor();
+                menuProfessor();
+            case 2:
+                alterarSituacaoProfessor();
+                menuProfessor();
+            case 3:
+                listarProfessores();
+                menuProfessor();
+            case 4:
+                cadastrarDisciplinaAoProfessor();
+                menuProfessor();
+            case 5:
+                listarDisciplinasPorProfessor();
+                menuProfessor();
+            case 6:
+                listarProfessoresPorDisciplina();
+                menuProfessor();
+            default:
+                System.out.println("Digite uma opção valida");
+                menuProfessor();
+        }
+
+    }
+
+    private static void listarProfessoresPorDisciplina() {
+        int op;
+        listarDisciplinas();
+        System.out.print("Informe o COD: ");
+        op = Integer.parseInt(input.nextLine());
+        System.out.println(".: PROFESSORES DE " + disciplinas.get(op).toUpperCase() + " :.");
+        for(Professor professor: listaProfessores){
+            if(professor.getDisciplinas().contains(disciplinas.get(op))){
+                System.out.println(professor.getNome() + (professor.isSituacao() ? " | ATIVO":" | INATIVO"));
+            }
+        }
+    }
+
+    private static void listarDisciplinasPorProfessor() {
+        int op;
+        listarProfessoresSituacao();
+        System.out.print("Informe o COD: ");
+        op = Integer.parseInt(input.nextLine());
+        System.out.println(listaProfessores.get(op).getDisciplinas());
+    }
+
+    private static void cadastrarDisciplinaAoProfessor() {
+        int op;
+        String disciplina;
+        listarDisciplinas();
+        System.out.print("Informe o COD: ");
+        op = Integer.parseInt(input.nextLine());
+        disciplina = disciplinas.get(op);
+        System.out.println();
+        listarProfessoresSituacao();
+        System.out.print("ADD " + disciplina + "para qual ? Informe o COD: ");
+        op = Integer.parseInt(input.nextLine());
+        listaProfessores.get(op).getDisciplinas().add(disciplina);
+        System.out.println();
+        System.out.println("Adcionado com sucesso");
+
+    }
+
+    private static void alterarSituacaoProfessor() {
+        int op;
+        listarProfessoresSituacao();
+        System.out.print("Informe o COD: ");
+        op = Integer.parseInt(input.nextLine());
+        listaProfessores.get(op).alterarSituacao();
+        System.out.println("Situação alterada !");
+
+    }
+
+    private static void listarProfessoresSituacao() {
+        int cod = 0;
+        System.out.println();
+        for(Professor professor: listaProfessores){
+            System.out.println("COD: " + cod + " - " + professor.getNome() + " | "
+                    + (professor.isSituacao() ? "ATIVO |" : "INATIVO |"));
+            System.out.println();
+            cod++;
+        }
+    }
+
+    private static void cadastrarNovoProfessor() {
+        String nome;
+        String matricula;
+        String cpf;
+
+        System.out.println();
+        System.out.print("Digite o nome do professor: ");
+        nome = input.nextLine();
+        System.out.println();
+        System.out.print("Digite a matricula: ");
+        System.out.println();
+        matricula = input.nextLine();
+        System.out.print("Digite o CPF: ");
+        cpf = input.nextLine();
+        System.out.println();
+        criarNovoProfessor(nome, matricula, cpf);
+        System.out.println("Cadastrado com sucesso");
+
 
     }
 
@@ -251,6 +370,44 @@ public class Main {
             System.out.println();
             cod++;
         }
+    }
+
+    public static void menuDisciplina(){
+        System.out.println("  ");
+        System.out.println(" .: DISCIPLINAS :.");
+        System.out.println("Escolha uma opção: ");
+        System.out.println("( 1 ) - Cadastrar nova disciplina");
+        System.out.println("( 2 ) - Listar disciplinas");
+        System.out.println("( 0 ) - Voltar");
+        acoesMenuDisciplina();
+
+    }
+
+    private static void acoesMenuDisciplina() {
+        int op;
+        System.out.print("Informe uma opção: ");
+        op = Integer.parseInt(input.nextLine());
+        switch (op){
+            case 1:
+                cadastraDisciplina();
+                menuDisciplina();
+                break;
+            case 2:
+                listarDisciplinas();
+                menuDisciplina();
+                break;
+            case 0:
+                menuPrincipal();
+                break;
+            default:
+                System.out.println("Digite uma opção valida");
+                menuDisciplina();
+                break;
+        }
+    }
+
+    private static void cadastraDisciplina() {
+        
     }
 
 }
