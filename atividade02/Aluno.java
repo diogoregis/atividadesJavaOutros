@@ -3,7 +3,7 @@ package atividade02;
 public class Aluno extends Pessoa{
 
     private String disciplina;
-    private int[] notas = new int[3];
+    private double[] notas = new double[3];
     private int faltas=0;
 
 
@@ -12,9 +12,14 @@ public class Aluno extends Pessoa{
         this.disciplina = disciplina;
     }
 
-    public int calculaMedia(){
-        //TODO
-        return 0;
+    public double calculaMedia(){
+        double media = 0;
+
+        for(double nota: notas){
+            media = media + nota;
+        }
+
+        return media/notas.length;
     }
 
     public void registraFalta(){
@@ -34,11 +39,11 @@ public class Aluno extends Pessoa{
         this.disciplina = disciplina;
     }
 
-    public int[] getNotas() {
+    public double[] getNotas() {
         return notas;
     }
 
-    public void setNotas(int[] notas) {
+    public void setNotas(double[] notas) {
         this.notas = notas;
     }
 

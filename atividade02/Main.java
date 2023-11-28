@@ -2,14 +2,21 @@ package atividade02;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
+    static Scanner input = new Scanner(System.in);
+    static int opcao;
     static List<Aluno> listaAlunos = new ArrayList<Aluno>();
     static List<Professor> listaProfessores = new ArrayList<Professor>();
-    static String[] disciplinas = {"Matematica", "Português", "Geografia", "Quimica", "Historia"};
+    static List<String> disciplinas = new ArrayList<String>();
 
     public static void main(String[] args) {
+        disciplinas.add("Matematica");
+        disciplinas.add("Português");
+        disciplinas.add("Geografia");
+
         criarNovoAluno("Joazinho", "Matematica");
         criarNovoAluno("Fulano", "Matematica");
         criarNovoAluno("Maria", "Português");
@@ -19,11 +26,7 @@ public class Main {
         criarNovoProfessor("Tadeu Paulista", "A203", "007.008.009-13");
 
 
-        listarAlunos();
-        listarProfessores();
-        
-        //TODO
-
+        menuPrincipal();
 
 
     }
@@ -34,20 +37,219 @@ public class Main {
         System.out.println("Aluno adcionando !");
     }
 
+    public static void cadastrandoNovoAluno(){
+        String nomeAluno;
+        String disciplina;
+        int op;
+
+        System.out.println();
+        System.out.print("Digite o nome do aluno: ");
+        nomeAluno = input.nextLine();
+        System.out.println();
+        listarDisciplinas();
+        System.out.println();
+        System.out.print("Informe o COD da disciplina: ");
+        op = Integer.parseInt(input.nextLine());
+        disciplina = disciplinas.get(op);
+
+        criarNovoAluno(nomeAluno, disciplina);
+
+    }
+
     public static void criarNovoProfessor(String nome, String matricula, String cpf){
         Professor professor = new Professor(nome, matricula, cpf);
         listaProfessores.add(professor);
     }
 
     public static void listarAlunos(){
+        int cod = 0;
         for(Aluno aluno: listaAlunos){
-            System.out.println(aluno);
+            System.out.print("COD: " + cod + " " + aluno);
+            System.out.println();
+            cod++;
         }
     }
 
     public static void listarProfessores(){
         for(Professor professor: listaProfessores){
             System.out.println(professor);
+        }
+    }
+
+    public static void menuPrincipal(){
+        System.out.println(" ");
+        System.out.println("Escolha uma opção: ");
+        System.out.println("( 1 ) - Gerenciar Alunos");
+        System.out.println("( 2 ) - Gerenciar Professor");
+        System.out.println("( 0 ) - Sair");
+        acoesMenuPrincipal();
+    }
+
+    public static void acoesMenuPrincipal(){
+        opcao = Integer.parseInt(input.nextLine());
+        if (opcao == 1){
+            menuAluno();
+        } else if (opcao == 2) {
+            menuProfessor();
+        } else if (opcao == 0) {
+            System.exit(0);
+        } else menuPrincipal();
+    }
+
+    public static void menuAluno(){
+        System.out.println();
+        System.out.println(" .: ALUNOS :.");
+        System.out.println("Escolha uma opção: ");
+        System.out.println("( 1 ) - Cadastrar novo aluno");
+        System.out.println("( 2 ) - Cadastrar notas");
+        System.out.println("( 3 ) - Calcular media por aluno");
+        System.out.println("( 4 ) - Calcular media por disciplina");
+        System.out.println("( 5 ) - Registrar falta");
+        System.out.println("( 6 ) - Consultar faltas");
+        System.out.println("( 7 ) - Listar alunos");
+        System.out.println("( 0 ) - Voltar");
+        acoesMenuAluno();
+    }
+
+    public static void menuProfessor(){
+        System.out.println("  ");
+        System.out.println(" .: PROFESSORES :.");
+        System.out.println("Escolha uma opção: ");
+        System.out.println("( 1 ) - Cadastrar novo professor");
+        System.out.println("( 2 ) - Alterar situação professor");
+        System.out.println("( 3 ) - Listar professores");
+        System.out.println("( 4 ) - Cadastrar uma disciplina ao professor");
+        System.out.println("( 5 ) - Listar as disciplinas de um professor");
+        System.out.println("( 6 ) - Buscar os professores que lecionam uma disciplina");
+        System.out.println("( 0 ) - Voltar");
+    }
+
+    public static void acoesMenuAluno(){
+
+        opcao = Integer.parseInt(input.nextLine());
+        switch (opcao){
+            case 0:
+                menuPrincipal();
+            case 1:
+                cadastrandoNovoAluno();
+                menuAluno();
+            case 2:
+                cadastrarNotaAluno();
+                menuAluno();
+            case 3:
+                calcularMediaPorAluno();
+                menuAluno();
+            case 4:
+                calcularMediaPorDisciplina();
+                menuAluno();
+            case 5:
+                registrarFaltaAluno();
+                menuAluno();
+            case 7:
+                listarAlunos();
+                menuAluno();
+            case 6:
+                consultarFaltasAluno();
+                menuAluno();
+            default:
+                System.out.println("Digite uma opção valida");
+                menuAluno();
+        }
+
+    }
+
+    private static void consultarFaltasAluno() {
+        int op;
+        listarAlunos();
+        System.out.print("Informa o COD do aluno: ");
+        op = Integer.parseInt(input.nextLine());
+        System.out.println();
+        System.out.println(listaAlunos.get(op).getNome() + " tem, "
+                + listaAlunos.get(op).getFaltas() + " falta(s).");
+
+
+    }
+
+    private static void registrarFaltaAluno() {
+        int op;
+        listarAlunos();
+        System.out.print("Informa o COD do aluno: ");
+        op = Integer.parseInt(input.nextLine());
+        listaAlunos.get(op).registraFalta();
+        System.out.println();
+        System.out.println("Falta registrada ! - total: " + listaAlunos.get(op).getFaltas());
+
+    }
+
+    private static void calcularMediaPorDisciplina() {
+        int op;
+        listarDisciplinas();
+        System.out.print("Digite o COD da disciplina: ");
+        op = Integer.parseInt(input.nextLine());
+        informarMediaPorDisciplina(op);
+
+    }
+
+    private static void informarMediaPorDisciplina(int op) {
+        double media = 0;
+        int contaAlunos = 0;
+        String disciplina = disciplinas.get(op);
+
+        for(Aluno aluno: listaAlunos){
+            if(aluno.getDisciplina() == disciplina){
+                media = media + aluno.calculaMedia();
+                contaAlunos++;
+            }
+        }
+        media = media/contaAlunos;
+        System.out.println("A media de " + disciplina.toUpperCase() + " é: " + media);
+    }
+
+    private static void calcularMediaPorAluno() {
+
+        int op;
+
+        listarAlunos();
+        System.out.print("Informa o COD do aluno: ");
+        op = Integer.parseInt(input.nextLine());
+        informarMediaPorAluno(op);
+
+    }
+
+    private static void informarMediaPorAluno(int op) {
+
+        System.out.println("A media de " + listaAlunos.get(op).getNome() + " é: " + listaAlunos.get(op).calculaMedia());
+
+    }
+
+    private static void cadastrarNotaAluno() {
+        int op;
+        System.out.println();
+        listarAlunos();
+        System.out.println();
+        System.out.print("Escolha o aluno (COD): ");
+        op = Integer.parseInt(input.nextLine());
+        lancamentoDeNotasPorAluno(op);
+    }
+
+    private static void lancamentoDeNotasPorAluno(int op) {
+        double nota;
+        for(int x = 0; x < 3; x++){
+            System.out.print("Informe a nota " + (x+1) + ": ");
+            nota = Double.parseDouble(input.nextLine());
+            listaAlunos.get(op).getNotas()[x] = nota;
+            System.out.println();
+        }
+        System.out.println("Notas cadastradas");
+    }
+
+    public static void listarDisciplinas(){
+        int cod = 0;
+
+        for(String disciplina: disciplinas){
+            System.out.println("( " + cod + " )" + " | " + disciplina);
+            System.out.println();
+            cod++;
         }
     }
 
